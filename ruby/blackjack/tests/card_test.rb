@@ -1,4 +1,4 @@
-require 'test/unit'
+require File.expand_path 'test_helper', File.dirname(__FILE__)
 
 class CardTest < Test::Unit::TestCase
   def setup

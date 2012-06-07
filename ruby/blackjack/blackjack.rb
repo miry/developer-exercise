@@ -1,7 +1,6 @@
-require 'blackjack/card.rb'
-require 'blackjack/deck.rb'
-require 'blackjack/hand.rb'
-
+require File.expand_path './blackjack/card.rb', File.dirname(__FILE__)
+require File.expand_path './blackjack/deck.rb', File.dirname(__FILE__)
+require File.expand_path './blackjack/hand.rb', File.dirname(__FILE__)
 
 module Blackjack
 end
