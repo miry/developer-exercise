@@ -30,5 +30,9 @@ class WhereTest < Test::Unit::TestCase
   def test_with_chain_calls
     assert_equal [@charles], @fixtures.where(:quote => /if/i).where(:rank => 3)
   end
+  
+  def test_without_correct_fields
+    assert_equal [@wolf], [@wolf, nil, {}, []].where(:name => 'The Wolf')
+  end
 end
 
