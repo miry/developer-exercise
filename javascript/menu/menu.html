@@ -11,13 +11,6 @@
   <script>
     window.nestedMenu = {"study":{"reading_material":["Orientation","Math","Verbal","Writing"],"flashcards":"Flashcards","bookmarks":"Bookmarks","notes":"Notes"},"practice":{"flashcards":"Flashcards","quizzes":"Quizzes","performance":"Overall Performance"},"test":{"tests":"Tests","reports":"Reports"}}
     
-    $(document).ready(function(){
-      for (var title in nestedMenu) {
-       if (nestedMenu.hasOwnProperty(title)) {
-         $("#menu").append("<a class='menu' href='#'>"+title+'</a>');
-       }
-      }
-    });
   </script>
   <script type="text/javascript" src="tests.js"></script>  
 </head>

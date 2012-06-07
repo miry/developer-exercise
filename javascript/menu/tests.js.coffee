@@ -3,9 +3,6 @@ module "initialize",
     @fixtures ={"study":{"reading_material":["Orientation","Math","Verbal","Writing"],"flashcards":"Flashcards","bookmarks":"Bookmarks","notes":"Notes"},"practice":{"flashcards":"Flashcards","quizzes":"Quizzes","performance":"Overall Performance"},"test":{"tests":"Tests","reports":"Reports"}}
     @root_item = new Menu(@fixtures)
 
-  teardown: () ->
-    console.log "teardown"
-
 test "should load models", () ->
   ok @root_item, "Plugin loaded"
 
@@ -37,3 +34,25 @@ test "should create item with title", () ->
   equal item.items[0].parent, item, "Should have parent"
   equal item.items[0].is_leaf(), true, "Should be leaf"
   equal item.items[0].title, "Sub1", "Should be have title Sub1"
+
+test "should create only root with one item by string", () ->
+  item = new Menu("root1")
+  equal item.items[0].title, "root1", "Should have title"
+  
+module "effects",
+  setup: () ->
+    @scope = $("#menu")
+    @fixtures ={"study":{"reading_material":["Orientation","Math","Verbal","Writing"],"flashcards":"Flashcards","bookmarks":"Bookmarks","notes":"Notes"},"practice":{"flashcards":"Flashcards","quizzes":"Quizzes","performance":"Overall Performance"},"test":{"tests":"Tests","reports":"Reports"}}
+    @root_item = new Menu(@fixtures)
+
+  teardown: () ->
+    @scope.html("")
+    
+test "should show menu items on load", ()->
+  equal @scope.text().trim(), "", "Should be empty"
+  @scope.menu()
+  equal @scope.text().trim(), "", "Should be empty"
+  @scope.menu("root1")
+  equal @scope.text().trim(), "root1", "Should not be empty after init menu"
+  @scope.menu(["root0", "root1"])
+  equal @scope.find("a:first").text().trim(), "root0", "Should not be empty after init menu"

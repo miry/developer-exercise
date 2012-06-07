@@ -20,9 +20,6 @@
         }
       };
       return this.root_item = new Menu(this.fixtures);
-    },
-    teardown: function() {
-      return console.log("teardown");
     }
   });
 
@@ -66,6 +63,49 @@
     equal(item.items[0].parent, item, "Should have parent");
     equal(item.items[0].is_leaf(), true, "Should be leaf");
     return equal(item.items[0].title, "Sub1", "Should be have title Sub1");
+  });
+
+  test("should create only root with one item by string", function() {
+    var item;
+    item = new Menu("root1");
+    return equal(item.items[0].title, "root1", "Should have title");
+  });
+
+  module("effects", {
+    setup: function() {
+      this.scope = $("#menu");
+      this.fixtures = {
+        "study": {
+          "reading_material": ["Orientation", "Math", "Verbal", "Writing"],
+          "flashcards": "Flashcards",
+          "bookmarks": "Bookmarks",
+          "notes": "Notes"
+        },
+        "practice": {
+          "flashcards": "Flashcards",
+          "quizzes": "Quizzes",
+          "performance": "Overall Performance"
+        },
+        "test": {
+          "tests": "Tests",
+          "reports": "Reports"
+        }
+      };
+      return this.root_item = new Menu(this.fixtures);
+    },
+    teardown: function() {
+      return this.scope.html("");
+    }
+  });
+
+  test("should show menu items on load", function() {
+    equal(this.scope.text().trim(), "", "Should be empty");
+    this.scope.menu();
+    equal(this.scope.text().trim(), "", "Should be empty");
+    this.scope.menu("root1");
+    equal(this.scope.text().trim(), "root1", "Should not be empty after init menu");
+    this.scope.menu(["root0", "root1"]);
+    return equal(this.scope.find("a:first").text().trim(), "root0", "Should not be empty after init menu");
   });
 
 }).call(this);
