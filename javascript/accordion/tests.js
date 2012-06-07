@@ -3,6 +3,12 @@
   module("initialize", {
     setup: function() {
       return this.subject = $('.accordion-wrapper');
+    },
+    teardown: function() {
+      $('.accordion-header').attr({
+        "class": "accordion-header"
+      });
+      return $('.accordion-header div').show();
     }
   });
 
@@ -29,11 +35,36 @@
     return equal($(".accordion-header:first > div:visible").length, 0, "Content for first item should be hidden");
   });
 
-  module("options", test('should activate third item', function() {
+  module("options", {
+    teardown: function() {
+      $('.accordion-header').attr({
+        "class": "accordion-header"
+      });
+      return $('.accordion-header div').show();
+    }
+  });
+
+  test('should activate third item', function() {
     $('.accordion-wrapper').accordion({
       active: 2
     });
     return equal($('.ui-active-state').parent().children().index($('.ui-active-state')), 2, "Should be third one");
-  }));
+  });
+
+  test('should set class accordion active for current item', function() {
+    $('.accordion-wrapper').accordion({
+      classActiveItem: 'accordion-active'
+    });
+    equal($('.ui-active-state').length, 0, "Should not find any items with default class");
+    return equal($('.accordion-active').length, 1, "Should set a new class");
+  });
+
+  test('should set class accordion default for other items', function() {
+    $('.accordion-wrapper').accordion({
+      classDefaultItem: 'accordion-default'
+    });
+    equal($('.ui-default-state').length, 0, "Should not find any items with default class");
+    return equal($('.accordion-default').length, 4, "Should set a new class");
+  });
 
 }).call(this);
