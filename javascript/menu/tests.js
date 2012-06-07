@@ -30,7 +30,6 @@
   test("should have 3 root items", function() {
     this.root_item = new Menu(this.fixtures);
     equal(this.root_item.size(), 3, "Init 3  menu items");
-    equal(typeof this.root_item.title, "undefined", "Root item does not have title");
     return equal(typeof this.root_item.parent, "undefined", "Root item does not have parent");
   });
 
@@ -45,6 +44,11 @@
     var leaf;
     leaf = new Menu(void 0, "title", this.root_item);
     return ok(leaf.is_leaf(), "Get state of the menu item");
+  });
+
+  test("should init root", function() {
+    ok(!this.root_item.is_leaf(), "Should be root");
+    return ok(this.root_item.is_root(), "Should be root");
   });
 
   test("should create 3 sub items via array", function() {
@@ -68,13 +72,14 @@
   test("should create only root with one item by string", function() {
     var item;
     item = new Menu("root1");
-    return equal(item.items[0].title, "root1", "Should have title");
+    equal(item.items[0].title, "root1", "Should have title");
+    return ok(item.draw(), "Should draw own self");
   });
 
   module("effects", {
     setup: function() {
       this.scope = $("#menu");
-      this.fixtures = {
+      return this.fixtures = {
         "study": {
           "reading_material": ["Orientation", "Math", "Verbal", "Writing"],
           "flashcards": "Flashcards",
@@ -91,7 +96,6 @@
           "reports": "Reports"
         }
       };
-      return this.root_item = new Menu(this.fixtures);
     },
     teardown: function() {
       return this.scope.html("");
@@ -105,7 +109,23 @@
     this.scope.menu("root1");
     equal(this.scope.text().trim(), "root1", "Should not be empty after init menu");
     this.scope.menu(["root0", "root1"]);
-    return equal(this.scope.find("a:first").text().trim(), "root0", "Should not be empty after init menu");
+    equal(this.scope.find("a:first").text().trim(), "root0", "Should not be empty after init menu");
+    equal(this.scope.find("a:last").text().trim(), "root1", "Should not be empty after init menu");
+    this.scope.menu(this.fixtures);
+    equal(this.scope.find("a:first").text().trim(), "study", "Should not be empty after init menu");
+    return equal(this.scope.find("a:last").text().trim(), "test", "Should not be empty after init menu");
+  });
+
+  test("should show submenu items", function() {
+    this.scope.menu(this.fixtures);
+    this.scope.find("a:first").click();
+    return equal(this.scope.find("a:first").text().trim(), "reading_material", "Should show submenu item of study");
+  });
+
+  test("should show back link", function() {
+    this.scope.menu(this.fixtures);
+    this.scope.find("a:first").click();
+    return equal(this.scope.find("a:last").text().trim(), "back", "Should show back item");
   });
 
 }).call(this);

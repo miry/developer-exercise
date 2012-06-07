@@ -30,7 +30,7 @@
     };
 
     function Menu(items, title, parent) {
-      this.title = title;
+      this.title = title || "";
       this.parent = parent;
       this.items = init_items(this, items);
     }
@@ -43,34 +43,45 @@
       return this.items.length === 0;
     };
 
-    Menu.prototype.draw = function() {
+    Menu.prototype.is_root = function() {
+      return typeof this.parent === 'undefined';
+    };
+
+    Menu.prototype.draw = function(rel) {
       var result;
-      result = $("<a class='menu_item' href='#'>" + this.title + "</a>");
-      result.data("menu-item", this);
+      result = $("<a class='menu' href='#'>" + this.title + "</a>");
+      result.data("menu-item", rel || this);
       return result;
     };
 
     Menu.draw_list = function(scope, root) {
-      var item, _i, _len, _ref, _results;
+      var back_item, item, _i, _len, _ref;
       scope.html("");
       _ref = root.items;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        _results.push(scope.append(item.draw()));
+        scope.append(item.draw());
       }
-      return _results;
+      if (!root.is_root()) {
+        back_item = root.draw(root.parent);
+        back_item.text("back");
+        return scope.append(back_item);
+      }
     };
 
     Menu.bindings = function() {
-      return $("#menu .menu_item").live('click', function() {
-        return this.draw_list([]);
+      return $(" .menu").live('click', function() {
+        var $this;
+        $this = $(this);
+        if ($this.data("menu-item") && !$this.data("menu-item").is_leaf()) {
+          return Menu.draw_list($(this).parent(), $this.data("menu-item"));
+        }
       });
     };
 
     Menu.init_jquery_plugin = function(options) {
       var _this = this;
-      console.log(new Menu(options));
+      Menu.bindings();
       return this.each(function() {
         return Menu.draw_list($(_this), new Menu(options));
       });

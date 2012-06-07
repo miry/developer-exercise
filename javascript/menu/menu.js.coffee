@@ -12,7 +12,7 @@ class window.Menu
             new Menu(subitems, subtitle, self)
   
   constructor: (items, title, parent) ->
-    @title = title
+    @title = title || ""
     @parent = parent
     @items = init_items @, items
     
@@ -21,23 +21,33 @@ class window.Menu
     
   is_leaf: ()->
     @items.length == 0
+    
+  is_root: ()->
+    typeof(@parent) == 'undefined'
 
-  draw: ()->
-    result = $("<a class='menu_item' href='#'>#{@title}</a>")
-    result.data("menu-item", @)
+  draw: (rel)->
+    result = $("<a class='menu' href='#'>#{@title}</a>")
+    result.data("menu-item", rel || @)
     result
-      
+    
   @draw_list = (scope, root)->
     scope.html("")
     for item in root.items
       scope.append item.draw()
+    
+    if(!root.is_root())
+      back_item = root.draw(root.parent)
+      back_item.text("back")
+      scope.append back_item
   
   @bindings = ()->
-    $("#menu .menu_item").live 'click', ()->
-      @draw_list []
+    $(" .menu").live 'click', ()->
+      $this = $(@)
+      if($this.data("menu-item") && !$this.data("menu-item").is_leaf())
+        Menu.draw_list $(@).parent(), $this.data("menu-item")
       
   @init_jquery_plugin = (options)->
-    console.log new Menu(options)
+    Menu.bindings()
     @.each () => 
       Menu.draw_list $(@), new Menu(options)
     
