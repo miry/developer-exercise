@@ -1,9 +1,9 @@
-#menu {
+.menu_list {
  position: relative; 
  height: 100px;
 }
 a.menu {
-  width: 100px;
+  width: 150px;
   height: 20px;
   float: left;
   clear: both;

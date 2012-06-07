@@ -70,7 +70,7 @@
     };
 
     Menu.bindings = function() {
-      return $(" .menu").live('click', function() {
+      return $("a.menu").live('click', function() {
         var $this;
         $this = $(this);
         if ($this.data("menu-item") && !$this.data("menu-item").is_leaf()) {

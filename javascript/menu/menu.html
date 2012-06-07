@@ -11,14 +11,24 @@
   <script>
     window.nestedMenu = {"study":{"reading_material":["Orientation","Math","Verbal","Writing"],"flashcards":"Flashcards","bookmarks":"Bookmarks","notes":"Notes"},"practice":{"flashcards":"Flashcards","quizzes":"Quizzes","performance":"Overall Performance"},"test":{"tests":"Tests","reports":"Reports"}}
     
+	jQuery(function() {
+	  $("#menu_ext").menu(nestedMenu);
+	});
+	
   </script>
   <script type="text/javascript" src="tests.js"></script>  
 </head>
 <body>
   <div>Menu should be rendered below. Please use a nestedMenu structure to build a menu where clicking 
     on a item from the nestedMenu should replace menu with nested items. Additionally provide functionality to go back menu state you are coming from</div>
+
+  <div id="menu_ext" class="menu_list">
+  </div>
+
   <div id="menu">
   </div>
+  
+
   <h1 id="qunit-header">QUnit example</h1>
   <ol id="qunit-tests"></ol>
   <div id="qunit-fixture">

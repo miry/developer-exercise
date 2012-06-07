@@ -41,7 +41,7 @@ class window.Menu
       scope.append back_item
   
   @bindings = ()->
-    $(" .menu").live 'click', ()->
+    $("a.menu").live 'click', ()->
       $this = $(@)
       if($this.data("menu-item") && !$this.data("menu-item").is_leaf())
         Menu.draw_list $(@).parent(), $this.data("menu-item")
