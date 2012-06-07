@@ -23,7 +23,7 @@ class Accordion
       section.toggleClass(opts.classActiveItem, expression).
               toggleClass(opts.classDefaultItem, !expression).
               children(':odd').
-              toggle(expression)
+              slideToggle(expression)
 
 
     this.each () ->
@@ -36,7 +36,7 @@ class Accordion
       $sections.children(":even").click () ->
         section = $(@).parent()
         if(!section.hasClass(opts.classActiveItem))
-          deactivate_section section.siblings()
+          deactivate_section section.siblings("."+opts.classActiveItem)
           activate_section section
         false
       

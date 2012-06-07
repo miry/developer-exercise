@@ -28,7 +28,7 @@
       };
       manipulate_section = function(section, expression) {
         section = $(section);
-        return section.toggleClass(opts.classActiveItem, expression).toggleClass(opts.classDefaultItem, !expression).children(':odd').toggle(expression);
+        return section.toggleClass(opts.classActiveItem, expression).toggleClass(opts.classDefaultItem, !expression).children(':odd').slideToggle(expression);
       };
       return this.each(function() {
         var $sections, $this;
@@ -40,7 +40,7 @@
           var section;
           section = $(this).parent();
           if (!section.hasClass(opts.classActiveItem)) {
-            deactivate_section(section.siblings());
+            deactivate_section(section.siblings("." + opts.classActiveItem));
             activate_section(section);
           }
           return false;
