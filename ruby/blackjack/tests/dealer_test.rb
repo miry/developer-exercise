@@ -18,4 +18,12 @@ class DealerTest < Test::Unit::TestCase
     assert_equal @dealer.show_cards, @ace_card
   end
 
+  def test_dealer_stays_on_17
+    @dealer.hand.cards = [@ace_card, @eight_card]
+    assert_true @dealer.finished?
+
+    @dealer.hand.cards = [@eight_card]
+    assert_false @dealer.finished?
+  end
+
 end

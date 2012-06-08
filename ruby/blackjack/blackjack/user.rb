@@ -13,5 +13,9 @@ module Blackjack
     def show_cards
       @hand.cards
     end
+
+    def finished?
+      @hand.blackjack? || @hand.bust?
+    end
   end
 end

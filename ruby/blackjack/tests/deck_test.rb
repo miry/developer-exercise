@@ -19,10 +19,13 @@ class DeckTest < Test::Unit::TestCase
     assert_equal @deck.playable_cards.size, 52
   end
 
-  def test_show_cards_of_user_and_dealer
+  def test_deal_cards_to_player_and_dealer
     @deck.deal_cards
     assert_equal @deck.players.size, 2
     assert_not_nil @deck.dealer
     assert_equal @deck.playable_cards.size, 46
+
+    assert_equal @deck.dealer.hand.cards.size, 2
+    assert_equal @deck.players.first.hand.cards.size, 2
   end
 end

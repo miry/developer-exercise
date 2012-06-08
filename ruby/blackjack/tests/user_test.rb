@@ -18,4 +18,11 @@ class UserTest < Test::Unit::TestCase
     assert_equal @user.show_cards, [@ace_card, @king_card]
   end
 
+  def test_user_finished
+    assert_true @user.finished?
+    @user.hand.cards = [@king_card, @king_card]
+    assert_false @user.finished?
+    @user.take_card(@king_card)
+    assert_true @user.finished?
+  end
 end

@@ -47,5 +47,6 @@ module Blackjack
       @players = hands[0..-2].map{|hand| Player.new(hand) }
       @dealer  = Dealer.new hands.last
     end
+
   end
 end
