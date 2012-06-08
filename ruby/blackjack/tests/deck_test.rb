@@ -11,7 +11,7 @@ class DeckTest < Test::Unit::TestCase
   
   def test_dealt_card_should_not_be_included_in_playable_cards
     card = @deck.deal_card
-    assert(@deck.playable_cards.include?(card))
+    assert_not_include @deck.playable_cards, card
   end
 
   def test_shuffled_deck_has_52_playable_cards
@@ -22,6 +22,7 @@ class DeckTest < Test::Unit::TestCase
   def test_show_cards_of_user_and_dealer
     @deck.deal_cards
     assert_equal @deck.players.size, 2
-    assert_equal @deck.dealer.size, 1
+    assert_not_nil @deck.dealer
+    assert_equal @deck.playable_cards.size, 46
   end
 end
