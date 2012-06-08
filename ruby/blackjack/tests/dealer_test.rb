@@ -15,7 +15,7 @@ class DealerTest < Test::Unit::TestCase
   end
 
   def test_dealer_show_only_first_card
-    assert_equal @dealer.show_cards, @eight_card
+    assert_equal @dealer.show_cards, [@eight_card]
   end
 
   def test_dealer_stays_on_17

@@ -14,7 +14,9 @@ class UserTest < Test::Unit::TestCase
     @user.take_card @ace_card
   end
 
-  def test_user_show_cards
+  def test_user_show_cards_if_finished
+    assert_not_equal @user.show_cards, [@ace_card, @eight_card]
+    @user.finished!
     assert_equal @user.show_cards, [@ace_card, @eight_card]
   end
 
