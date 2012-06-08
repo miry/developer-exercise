@@ -45,8 +45,8 @@ module Blackjack
         dealed_card.last.add_card dealed_card.first
       end
 
-      @players = hands[0..-2].map{|hand| Player.new(hand) }
-      @dealer  = Dealer.new hands.last
+      @dealer  = Dealer.new hands.pop
+      @players = hands.map{|hand| Player.new(hand) }
     end
 
   end

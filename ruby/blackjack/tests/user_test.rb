@@ -34,7 +34,6 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_want_more
-    @user.deck = Deck.new
     assert_equal @user.hand.total_value, 19
     assert_equal @user.hand.values.first, 9
     assert_true @user.want_more?

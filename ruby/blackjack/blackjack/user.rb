@@ -5,7 +5,6 @@ module Blackjack
     def initialize(hand)
       @hand = hand
       @finished = false
-      @deck = nil
     end
 
     def take_card(card)
