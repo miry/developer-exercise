@@ -5,5 +5,9 @@ module Blackjack
     def initialize(suite, name, value)
       @suite, @name, @value = suite, name, value
     end
+
+    def min_value
+      @value.is_a?(Array) ? @value.min : @value
+    end
   end
 end

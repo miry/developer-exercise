@@ -21,4 +21,9 @@ class CardTest < Test::Unit::TestCase
     ace_card = Card.new(:hearts, :ace, [11, 1])
     assert_equal ace_card.value, [11, 1]
   end
+
+  def test_min_value_of_ace
+    ace_card = Card.new(:hearts, :ace, [11, 1])
+    assert_equal ace_card.min_value, 1
+  end
 end

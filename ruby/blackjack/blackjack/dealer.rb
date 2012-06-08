@@ -6,7 +6,7 @@ module Blackjack
     end
 
     def finished?
-      super || @hand.total_value > 17
+      @finished ||= super || @hand.total_value > 17
     end
   end
 end

@@ -2,6 +2,7 @@ module Blackjack
   class Deck
     attr_accessor :playable_cards, :players, :dealer
     NUMBER_OF_PLAYERS = 2
+    NUMBER_OF_CARDS = 52
     SUITES = [:hearts, :diamonds, :spades, :clubs]
     NAME_VALUES = {
       :two   => 2,

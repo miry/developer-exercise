@@ -5,7 +5,7 @@ class DealerTest < Test::Unit::TestCase
     @ace_card   = Card.new(:hearts, :ace, [11, 1])
     @king_card  = Card.new(:hearts, :king, 10)
     @eight_card = Card.new(:hearts, :eight, 8)
-    hand = Hand.new([@ace_card, @king_card])
+    hand = Hand.new([@eight_card,@eight_card])
     @dealer = Dealer.new(hand)
   end
 
@@ -15,15 +15,14 @@ class DealerTest < Test::Unit::TestCase
   end
 
   def test_dealer_show_only_first_card
-    assert_equal @dealer.show_cards, @ace_card
+    assert_equal @dealer.show_cards, @eight_card
   end
 
   def test_dealer_stays_on_17
+    assert_false @dealer.finished?
+
     @dealer.hand.cards = [@ace_card, @eight_card]
     assert_true @dealer.finished?
-
-    @dealer.hand.cards = [@eight_card]
-    assert_false @dealer.finished?
   end
 
 end
