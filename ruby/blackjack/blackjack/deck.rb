@@ -1,6 +1,7 @@
 module Blackjack
   class Deck
-    attr_accessor :playable_cards
+    attr_accessor :playable_cards, :players, :dealer
+    NUMBER_OF_PLAYERS = 2
     SUITES = [:hearts, :diamonds, :spades, :clubs]
     NAME_VALUES = {
       :two   => 2,
@@ -33,6 +34,18 @@ module Blackjack
           @playable_cards << Card.new(suite, name, value)
         end
       end
+    end
+
+    def deal_cards
+      hands = Array.new(NUMBER_OF_PLAYERS+1) { Hand.new }
+      cards = Array.new(hands.size*2) { deal_card }
+
+      cards.zip(hands*2).each do |dealed_card|
+        dealed_card.last.add_card dealed_card.first
+      end
+
+      @players = hands[0..-2].map{|hand| Player.new(hand) }
+      @dealer  = Dealer.new hands.last
     end
   end
 end

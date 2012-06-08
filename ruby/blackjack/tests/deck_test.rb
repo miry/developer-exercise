@@ -18,4 +18,10 @@ class DeckTest < Test::Unit::TestCase
     @deck.shuffle
     assert_equal @deck.playable_cards.size, 52
   end
+
+  def test_show_cards_of_user_and_dealer
+    @deck.deal_cards
+    assert_equal @deck.players.size, 2
+    assert_equal @deck.dealer.size, 1
+  end
 end
