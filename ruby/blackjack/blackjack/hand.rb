@@ -11,7 +11,11 @@ module Blackjack
     end
 
     def total_value
-      result = 0
+      values.select{|value| value<=21}.last
+    end
+
+    def values
+      result   = 0
       variants = []
       @cards.each do |card|
         if card.value.is_a?(Array)
@@ -20,7 +24,15 @@ module Blackjack
           result += card.value
         end
       end
-      variants.empty? ? result : variants.flatten.map{|v| sum=v+result; sum > 21 ? nil : sum}.compact.sort.last
+      variants.empty? ? [result] : variants.flatten.map{|v| v+result }.sort
+    end
+
+    def blackjack?
+      total_value == 21
+    end
+
+    def bust?
+      total_value.nil?
     end
   end
 end
